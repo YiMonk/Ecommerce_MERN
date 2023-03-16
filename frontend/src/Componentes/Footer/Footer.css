@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+      font-family: 'Orbitron', sans-serif;
+}
+.footer-link {
+  /* text-decoration: none; */
+  color: inherit;
+}
