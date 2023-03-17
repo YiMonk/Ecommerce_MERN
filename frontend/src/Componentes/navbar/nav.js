@@ -41,13 +41,13 @@ function Navbar() {
         <div className="perfil">
           <ul className="navbar-nav ml-auto">
 
-            <li className="nav-item">
+            <li className=" icono nav-item">
               <Link to="/carrito" className="nav-link">
                 <FontAwesomeIcon icon={faShoppingCart} />
               </Link>
             </li>
 
-            <li className="nav-item">
+            <li className=" icono nav-item">
               <Link to="/perfil" className="nav-link">
                 <FontAwesomeIcon icon={faUserCircle} />
               </Link>
@@ -58,6 +58,7 @@ function Navbar() {
 
       </div>
 
+{/* boton pantalla pequeña */}
       <button
         className="navbar-toggler"
         type="button"

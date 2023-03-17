@@ -1,8 +1,10 @@
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Catalogo from './Componentes/Catalogo/Catalogo';
-import Footer from './Componentes/Footer/Footer'
+import Footer from './Componentes/Footer/Footer';
 import Navbar from './Componentes/navbar/nav';
 import DetallesProducto from './Componentes/Producto/DetallesProducto';
+import Login from './Componentes/login/Login';
 
 function App() {
   return (
@@ -11,11 +13,13 @@ function App() {
 
         <Navbar />
 
-        <div className="container">
+        <div >
           <Routes>
+            
             <Route path="/catalogo" element={<Catalogo />} />
             <Route path="/producto/:id" element={<DetallesProducto/>}/>
-
+            <Route exact path="/login/" element={<Login/>}/>
+            
           </Routes>
 
         </div>

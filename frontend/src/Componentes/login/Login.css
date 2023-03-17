@@ -1,0 +1,22 @@
+Form{
+    font-family: 'Orbitron', sans-serif;
+    border-radius: 3rem;
+    box-shadow:.8rem .8rem 1.4rem  #c8d0e7, 
+    -.2rem -.2rem 1.8rem  #FFFFFF;
+    padding: 4rem;
+
+  background:  #e9ebed5c; 
+}
+
+.titulo{
+  text-align: center;
+  margin-bottom: 2%;
+  font-size: 2rem;
+}
+  .container-log {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     
+  }
+

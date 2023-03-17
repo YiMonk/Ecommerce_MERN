@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Catalogo.css";
 
+
 function Catalogo() {
   const [productos, setProductos] = useState([]);
 
@@ -20,7 +21,7 @@ function Catalogo() {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container my-3">
       <div className="row row-cols-1 row-cols-md-3 g-3">
         {productos.map((producto) => (
           <div className="col" key={producto._id} >
