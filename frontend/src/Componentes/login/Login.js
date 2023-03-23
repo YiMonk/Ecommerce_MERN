@@ -1,12 +1,12 @@
 import "./Login.css"
+import { Link } from "react-router-dom";
 import { Button, Form } from 'react-bootstrap';
-
 
 function Login() {
   return (
     <div className="container-log">
       <Form>
-      <p className="titulo">Iniciar Sesión</p>
+        <p className="titulo">Iniciar Sesión</p>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Correo</Form.Label>
           <Form.Control type="email" placeholder="Ejemplo@correo.com" />
@@ -24,9 +24,16 @@ function Login() {
           <Form.Check type="checkbox" label="capcha" />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
-          Iniciar
-        </Button>
+        <Form.Text className="text-muted">
+          <Link to={`/addUsuario`}>¿No tienes cuenta aun?   Registrate</Link>
+        </Form.Text>
+
+        <div className="registrar-boton d-grid ">
+            <Button variant="dark" size="lg">
+              Iniciar Sesion 
+            </Button>
+          </div>
+
       </Form>
     </div>
   );

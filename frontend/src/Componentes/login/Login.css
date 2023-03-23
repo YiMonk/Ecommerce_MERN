@@ -1,22 +1,40 @@
-Form{
-    font-family: 'Orbitron', sans-serif;
-    border-radius: 3rem;
-    box-shadow:.8rem .8rem 1.4rem  #c8d0e7, 
-    -.2rem -.2rem 1.8rem  #FFFFFF;
-    padding: 4rem;
+Form {
+  font-family: 'Orbitron', sans-serif;
+  border-radius: 3rem;
+  box-shadow: .8rem .8rem 1.4rem #c8d0e7,
+    -.2rem -.2rem 1.8rem #FFFFFF;
+  padding: 4rem;
 
-  background:  #e9ebed5c; 
+  background: #e9ebed5c;
 }
 
-.titulo{
+.titulo {
   text-align: center;
   margin-bottom: 2%;
   font-size: 2rem;
 }
-  .container-log {
+
+.container-log {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.registrar-boton .btn-dark {
+    height: 4rem;
+    border-radius: 1rem;
     display: flex;
-    justify-content: center;
     align-items: center;
-     
-  }
+    justify-content: center;
+    cursor: pointer;
+    transition: .07s ease;
+    box-shadow: .3rem .3rem .6rem #c8d0e7, -.2rem -.2rem .5rem #FFFFFF;
+    color: rgb(255, 254, 254);
+    
+}
+
+.registrar-boton .btn-dark:active{
+font-size: 1rem;
+}
 

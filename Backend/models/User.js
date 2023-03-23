@@ -4,13 +4,14 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   admin: { type: Boolean, default: false },
   nombre: { type: String, required: true },
-  correo: { type: String, required: true, unique: true },
-  clave: { type: String, required: true },
-  direccion: { type: String },
-  pagoMetodo: { type: String },
+  apellido: { type: String, required: true },
   contacto: { type: Number },
   genero: { type: String, required: true },
   fechaN: { type: Number, required: true },
+  direccion: { type: String },
+  correo: { type: String, required: true, unique: true },
+  clave: { type: String, required: true }
+  
 
 }, 
 {timestamps: true},

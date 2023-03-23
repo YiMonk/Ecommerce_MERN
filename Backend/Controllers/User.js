@@ -22,8 +22,8 @@ const obtenerUnUsuario = async (req, res) => {
 
 const agregarUsuario = async (req, res) => {
   try {
-    const { admin ,nombre, correo, clave, dirreccion,pagoMetodo, contacto, genero, fechaN } = req.body;
-    const nuevoUsuario = new Usuario({ admin ,nombre, correo, clave, dirreccion,pagoMetodo, contacto, genero, fechaN });
+    const { nombre, apellido, contacto,genero, fechaN, direccion, correo, clave } = req.body;
+    const nuevoUsuario = new Usuario({ nombre, apellido, contacto,genero, fechaN, direccion, correo, clave });
     const userGuardado = await nuevoUsuario.save();
     res.json(userGuardado);
   } catch (error) {
@@ -34,9 +34,9 @@ const agregarUsuario = async (req, res) => {
 const actualizarUsuario = async (req, res) => {
   try {
     const { id } = req.params;
-    const { nombre, correo, clave, dirreccion,pagoMetodo, contacto, genero, fechaN, admin } = req.body;
+    const { nombre, apellido, contacto,genero, fechaN, direccion, correo, clave, admin } = req.body;
     const userActualizado = await Usuario.findByIdAndUpdate(
-      id, { nombre, correo, clave, dirreccion,pagoMetodo, contacto, genero, fechaN, admin }, { new: true });
+      id, { nombre, apellido, contacto,genero, fechaN, direccion, correo, clave, admin }, { new: true });
     res.json(userActualizado);
   } catch (error) {
     res.status(500).json({ message: error.message });
