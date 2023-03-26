@@ -10,7 +10,7 @@ function Catalogo() {
   useEffect(() => {
     const getProductos = async () => {
       try {
-        const res = await axios.get("http://localhost:3001/productos");
+        const res = await axios.get("http://localhost:3002/productos");
         setProductos(res.data);
       } catch (err) {
         console.error(err);

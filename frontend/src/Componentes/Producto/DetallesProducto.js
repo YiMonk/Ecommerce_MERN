@@ -6,6 +6,7 @@ import "./DetallesProducto.css"
 
 
 function DetallesProducto() {
+  
   const { id } = useParams();
   const [producto, setProducto] = useState({});
 
@@ -13,7 +14,7 @@ function DetallesProducto() {
   useEffect(() => {
     const obtenerProducto = async () => {
       try {
-        const res = await axios.get(`http://localhost:3001/producto/${id}`);
+        const res = await axios.get(`http://localhost:3002/producto/${id}`);
         setProducto(res.data);
       } catch (error) {
         console.log(error);
@@ -31,7 +32,7 @@ function DetallesProducto() {
 
         <Col md={5} className="my-4 product-contenido" >
           <div className="product-nombre">
-            <h2 class="display-3">{producto.nombre}</h2>
+            <h2 className="display-3">{producto.nombre}</h2>
           </div>
 
           <div className="product-descripcion">

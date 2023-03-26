@@ -17,7 +17,7 @@
 //   const [clave, setClave] = useState('');
 
 //     try {
-//       const res =axios.post('http://localhost:3001/addUsuario', usuario);
+//       const res =axios.post('http://localhost:3002/addUsuario', usuario);
 //       alert(res.data);
 //     } catch (error) {
 //       console.log(error);
