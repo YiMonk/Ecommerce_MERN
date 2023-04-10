@@ -10,17 +10,15 @@ function DetallesProducto() {
   const { id } = useParams();
   const [producto, setProducto] = useState({});
 
-
   useEffect(() => {
-    const obtenerProducto = async () => {
-      try {
-        const res = await axios.get(`http://localhost:3002/producto/${id}`);
+    axios
+      .get(`http://localhost:3002/api/productos/detalles/${id}`)
+      .then((res) => {
         setProducto(res.data);
-      } catch (error) {
+      })
+      .catch((error) => {
         console.log(error);
-      }
-    };
-    obtenerProducto();
+      });
   }, [id]);
 
   return (

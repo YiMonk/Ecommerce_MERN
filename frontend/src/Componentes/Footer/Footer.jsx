@@ -35,7 +35,7 @@ function Footer() {
                             </li>
                             <li>
                                 <Link to="/" className="footer-link">
-                                    <FontAwesomeIcon icon={faEnvelope} /> Correo
+                                    <FontAwesomeIcon icon={faEnvelope} /> email
                                 </Link>
                             </li>
                             <li>

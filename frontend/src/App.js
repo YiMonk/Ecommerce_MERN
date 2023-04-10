@@ -1,16 +1,18 @@
+// import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Catalogo from './Componentes/Catalogo/Catalogo';
-import Footer from './Componentes/Footer/Footer';
 import Navbar from './Componentes/navbar/nav';
+import Footer from './Componentes/Footer/Footer';
 import DetallesProducto from './Componentes/Producto/DetallesProducto';
 import Login from './Componentes/login/Login';
+import Registrar from './Componentes/login/Registrar';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
 
+    <div className="App">
+      <Router>
         <Navbar />
 
         <div >
@@ -18,14 +20,16 @@ function App() {
 
             <Route path="/Catalogo" element={<Catalogo />} />
             <Route path="/producto/:id" element={<DetallesProducto />} />
-            <Route path="/Login/" element={<Login />} />
+            <Route path="/Login/" element={<Login/>} />
+            <Route path="/registrar" element={<Registrar/>} />
 
           </Routes>
         </div>
 
         <Footer />
-      </div>
-    </Router>
+      </Router>
+    </div>
+
   );
 }
 
