@@ -8,34 +8,33 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const [inputs, setInputs] = useState({
-    // email: "",
-    // clave: "",
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
   });
 
   const navigate = useNavigate();
 
-  const onChangeHandler = (e) => {
-    const { email, value } = e.target;
-    setInputs((prev) => {
-      return { ...prev, [email]: value };
-    });
-  };
+  const { email, password } = formData;
 
-  const submitHandler = (e) => {
-    e.preventDefault();
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    // console.log(inputs);
 
-    //conexion con axios
-    axios
+    const onSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        const res = await axios
       .post(
         "http://localhost:3002/api/user/login",
-        { ...inputs },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        console.log(res);
+        JSON.stringify({ email, password }),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(res.data); // handle success response
 
         if (!res.data.created) {
           if (res.data.error_type === 0) {
@@ -76,26 +75,26 @@ function Login() {
           });
           navigate("/");
         }
-      })
-      .catch((err) => {
-        console.log(`Request error: ${err}`);
-      });
-    
-  };
-  
+      } catch (err) {
+        console.error(err.response.data); // handle error response
+        toast.error(err.response.data.message);
+      }
+    };
+      
+ 
 
   return (
     <div className="container-log">
-      <Form onSubmit={submitHandler}>
+      <Form onSubmit={onSubmit}>
         <p className="titulo">Iniciar Sesión</p>
         <Form.Group className="mb-3" >
           <Form.Label>Email</Form.Label>
           <Form.Control
-            type="email"
-            placeholder="Ejemplo@email.com" 
-            name="email"
-            value={inputs.email}
-            onChange={onChangeHandler}
+           type="email"
+           placeholder="Enter email"
+           name="email"
+           value={email}
+           onChange={onChange}
           />
         </Form.Group>
 
@@ -103,11 +102,10 @@ function Login() {
           <Form.Label>Contraseña</Form.Label>
           <Form.Control
             type="password"
-            placeholder="*********"
-            id="clave"
-            name="clave"
-            value={inputs.clave}
-            onChange={onChangeHandler}
+            placeholder="Password"
+            name="password"
+            value={password}
+            onChange={onChange}
           />
         </Form.Group>
 
@@ -116,9 +114,9 @@ function Login() {
         </Form.Text>
 
         <div className="registrar-boton d-grid ">
-          <Button type="submit" variant="dark" size="lg">
-            Iniciar Sesion
-          </Button>
+        <Button variant="primary" type="submit">
+          Login
+        </Button>
         </div>
 
         <Form.Text className="text-muted">

@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 
+
 router.post("/verify_account", async (req, res, next) => {
   const { token } = req.body;
 
@@ -37,7 +38,7 @@ router.post(
     check("email", "Introduce email").not().isEmpty(),
     check("clave", "Introduce clave").not().isEmpty(),
   ],
-  async (req, res, next) => {
+  async (req, res) => {
     const { email, clave } = req.body;
 
     const error = validationResult(req);

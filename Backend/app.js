@@ -35,15 +35,17 @@ mongoose.connect(process.env.MONGODB_URI, {
   console.error('Error de conexión a MongoDB', err);
 });
 
+// Accede a las colecciones users y productos dentro de ecommerce
+// const db = mongoose.connection;
+// db.collection('users');
+// // db.collection('productos');
+
+
 //rutas--------------------------------------------------------------------------
 
 app.use("/api/user", userRouter);
 app.use("/api/productos", productosRouter);
 
-// Accede a las colecciones users y productos dentro de ecommerce
-const db = mongoose.connection;
-db.collection('users');
-db.collection('productos');
 
 // Start server----------------------------------------------------
 app.listen(process.env.PORT, () => {
