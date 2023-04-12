@@ -3,9 +3,7 @@ const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
 const userModel = require("../models/userModel");
-
 
 router.post("/verify_account", async (req, res, next) => {
   const { token } = req.body;
@@ -26,8 +24,8 @@ router.post("/verify_account", async (req, res, next) => {
 
     res.json({
       status: true,
-      username: findAccount.username,
       email: findAccount.email,
+      clave: findAccount.clave,
     });
   });
 });

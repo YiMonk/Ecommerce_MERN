@@ -9,8 +9,8 @@ import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [inputs, setInputs] = useState({
-    email: "",
-    clave: "",
+    // email: "",
+    // clave: "",
   });
 
   const navigate = useNavigate();
@@ -25,12 +25,12 @@ function Login() {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    console.log(inputs);
+    // console.log(inputs);
 
     //conexion con axios
     axios
       .post(
-        "",
+        "http://localhost:3002/api/user/login",
         { ...inputs },
         { withCredentials: true }
       )
@@ -89,12 +89,12 @@ function Login() {
       <Form onSubmit={submitHandler}>
         <p className="titulo">Iniciar Sesión</p>
         <Form.Group className="mb-3" >
-          <Form.Label>email</Form.Label>
+          <Form.Label>Email</Form.Label>
           <Form.Control
             type="email"
             placeholder="Ejemplo@email.com" 
-            name="username"
-            value={inputs.username}
+            name="email"
+            value={inputs.email}
             onChange={onChangeHandler}
           />
         </Form.Group>
@@ -104,9 +104,9 @@ function Login() {
           <Form.Control
             type="password"
             placeholder="*********"
-            id="password"
-            name="password"
-            value={inputs.password}
+            id="clave"
+            name="clave"
+            value={inputs.clave}
             onChange={onChangeHandler}
           />
         </Form.Group>
