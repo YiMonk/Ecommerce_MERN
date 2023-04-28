@@ -1,40 +1,135 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import "./Login.css";
+import { Link } from "react-router-dom";
+import { Button, Form } from "react-bootstrap";
+import React, { useState } from "react";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+function Login() {
+  const [inputs, setInputs] = useState({
+    email: "",
+    clave: "",
+  });
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await axios.post('/api/login', { username, password });
-      sessionStorage.setItem('token', response.data.token);
-      setMessage('Login successful!');
-      // Redirect to home page or another authorized route
-    } catch (error) {
-      setMessage('Invalid username or password');
-    }
+  const navigate = useNavigate();
+
+  const onChangeHandler = (e) => {
+    const { email, value } = e.target;
+    setInputs((prev) => {
+      return { ...prev, [email]: value };
+    });
   };
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    console.log(inputs);
+
+    //conexion con axios
+    axios
+      .post(
+        "http://localhost:3002/api/user/login",
+        { ...inputs },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log(res);
+
+        if (!res.data.created) {
+          if (res.data.error_type === 0) {
+            toast.error(res.data.error[0].msg, {
+              position: "bottom-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          } else if (res.data.error_type === 1) {
+            toast.error(res.data.message, {
+              position: "bottom-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          }
+        }
+
+        if (res.data.created) {
+          toast.success(res.data.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        console.log(`Request error: ${error}`);
+      });
+    
+  };
+  
+
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input type="text" id="username" value={username} onChange={(event) => setUsername(event.target.value)} />
+    <div className="container-log">
+      <Form onSubmit={submitHandler}>
+        <p className="titulo">Iniciar Sesión</p>
+        <Form.Group className="mb-3" >
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Ejemplo@email.com" 
+            name="username"
+            value={inputs.email}
+            onChange={onChangeHandler}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" >
+          <Form.Label>Contraseña</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="*********"
+            id="password"
+            name="password"
+            value={inputs.clave}
+            onChange={onChangeHandler}
+          />
+        </Form.Group>
+
+        <Form.Text className="text-muted">
+          <Link to={`/`}> Olvide mi Contraseña</Link>
+        </Form.Text>
+
+        <div className="registrar-boton d-grid ">
+          <Button type="submit" variant="dark" size="lg">
+            Iniciar Sesion
+          </Button>
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input type="password" id="password" value={password} onChange={(event) => setPassword(event.target.value)} />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-      <p>{message}</p>
+
+        <Form.Text className="text-muted">
+          {" "}
+          <br />
+          ¿No tienes cuenta aun? <Link to={`/registrar`}> Registrate</Link>
+        </Form.Text>
+      </Form>
+      <ToastContainer />
     </div>
   );
-};
+}
 
 export default Login;

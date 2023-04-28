@@ -13,7 +13,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:3002',
+  origin: 'http://localhost:3000',
   optionsSuccessSatus:200,
   credentials: true
 }));
@@ -32,8 +32,8 @@ mongoose.connect(process.env.MONGODB_URI, {
   dbName: "ecommerce"
 }).then(() => {
   console.log('Conexión exitosa a MongoDB');
-}).catch(err => {
-  console.error('Error de conexión a MongoDB', err);
+}).catch(error => {
+  console.error('Error de conexión a MongoDB', error);
 });
 
 

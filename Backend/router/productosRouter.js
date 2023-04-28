@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const productoModel = require("../models/productosModel");
 const { check, validationResult } = require("express-validator");
+const authAdmin = require("../middleware/authAdmin");
 
 
 // Ver todos los productos ----------------------------------------------------------------------------
@@ -33,7 +34,7 @@ router.get("/detalles/:id",
   });
 
 // Agregar producto ----------------------------------------------------------------------------
-router.post("/add",
+router.post("/add",authAdmin,
   check("nombre", "Introduce nombre del producto").not().isEmpty(),
   check("precio", "Introduce precio del producto").not().isEmpty(),
   check("img", "Add img").not().isEmpty(),
@@ -62,25 +63,48 @@ router.post("/add",
 );
 
 // Actualizar producto ----------------------------------------------------------------------------
-router.put("/updateProduct",
-  async (req, res) => {
-    try {
-      const { nombre, descripcion, precio, imagen } = req.body
-      await productoModel.findByIdAndUpdate(
-        { _id: req.params.id },
-        {
-          nombre: nombre.TolowerCase,
-          descripcion,
-          precio,
-          imagen
-        }
-      );
-      res.json({ msg: "Producto actualizado exitosamente" })
-    } catch (error) {
-      return res.status(500).json({ msg: err.mesagge })
+router.put("/updateProduct/:id", authAdmin,
+ async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const producto = await productoModel.findById(id);
+    if (!producto) {
+      res.json({ message: "Producto no existe", status: 0 });
+      return;
     }
+
+    const { nombre, descripcion, precio, imagen } = req.body;
+    await productoModel.findByIdAndUpdate(id, {
+      nombre: nombre.toLowerCase(),
+      descripcion,
+      precio,
+      imagen,
+    });
+    res.json({ mensaje: "Producto actualizado exitosamente" });
+
+  } catch (error) {
+    return res.status(500).json({ mensaje: error.message });
   }
-);
+});
+
+// Eliminar producto --------------------------------------------------------------------------------
+router.delete("/deleteProduct/:id", authAdmin,
+ async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const producto = await productoModel.findByIdAndDelete(id);
+    if (!producto) {
+      res.json({ mensaje: "Producto no encontrado", status: 0 });
+      return;
+    }
+
+    res.json({ mensaje: "Producto eliminado exitosamente" });
+  } catch (error) {
+    return res.status(500).json({ mensaje: error.message });
+  }
+}); 
 
 
 module.exports = router;
