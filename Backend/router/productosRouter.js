@@ -6,33 +6,34 @@ const { check, validationResult } = require("express-validator");
 
 // Ver todos los productos ----------------------------------------------------------------------------
 
-router.get("/all", async (req, res) => {
-  try {
-    const productos = await productoModel.find({});
-    res.json(productos);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+router.get("/all",
+  async (req, res) => {
+    try {
+      const productos = await productoModel.find({});
+      res.json(productos);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
 
 // Ver un producto --------------------------------------------------------------------------------------
 
-router.get("/detalles/:id", async (req, res) => {
-  const { id } = req.params;
+router.get("/detalles/:id",
+  async (req, res) => {
+    const { id } = req.params;
 
-  const productos = await productoModel.findById(id);
+    const productos = await productoModel.findById(id);
 
-  if (!productos) {
-    res.json({ message: "Producto no existe", status: 0 });
-    return;
-  }
+    if (!productos) {
+      res.json({ message: "Producto no existe", status: 0 });
+      return;
+    }
 
-  res.json(productos);
-});
+    res.json(productos);
+  });
 
 // Agregar producto ----------------------------------------------------------------------------
-router.post(
-  "/add",
+router.post("/add",
   check("nombre", "Introduce nombre del producto").not().isEmpty(),
   check("precio", "Introduce precio del producto").not().isEmpty(),
   check("img", "Add img").not().isEmpty(),
@@ -48,9 +49,9 @@ router.post(
     }
 
     const newProduct = new productoModel({
-      nombre, 
-      precio, 
-      img, 
+      nombre,
+      precio,
+      img,
       descripcion,
     });
 
@@ -59,5 +60,27 @@ router.post(
     });
   }
 );
+
+// Actualizar producto ----------------------------------------------------------------------------
+router.put("/updateProduct",
+  async (req, res) => {
+    try {
+      const { nombre, descripcion, precio, imagen } = req.body
+      await productoModel.findByIdAndUpdate(
+        { _id: req.params.id },
+        {
+          nombre: nombre.TolowerCase,
+          descripcion,
+          precio,
+          imagen
+        }
+      );
+      res.json({ msg: "Producto actualizado exitosamente" })
+    } catch (error) {
+      return res.status(500).json({ msg: err.mesagge })
+    }
+  }
+);
+
 
 module.exports = router;

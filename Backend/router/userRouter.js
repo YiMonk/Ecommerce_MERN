@@ -32,8 +32,7 @@ router.post("/verify_account", async (req, res, next) => {
 });
 
 
-router.post(
-  "/login",
+router.post("/login",
   [
     check("email", "Introduce email").not().isEmpty(),
     check("clave", "Introduce clave").not().isEmpty(),
@@ -73,8 +72,7 @@ router.post(
   }
 );
 
-router.post(
-  "/register",
+router.post("/register",
   [
     check("nombre", "Introduce nombre").not().isEmpty(),
     check("apellido", "Introduce apellido").not().isEmpty(),
@@ -144,5 +142,32 @@ router.post(
     });
   }
 );
+
+router.get("/allUsers",
+  async (req, res) => {
+    try {
+      const users = await userModel.find({});
+      res.json(users);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+
+router.get("/userDetalles/:id",
+  async (req, res) => {
+    const { id } = req.params;
+
+    const user = await userModel.findById(id);
+
+    if (!user) {
+      res.json({ message: "Usuario no existe", status: 0 });
+      return;
+    }
+
+    res.json(user);
+  });
+
+
+
 
 module.exports = router;

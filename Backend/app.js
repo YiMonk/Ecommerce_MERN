@@ -13,7 +13,8 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'http://localhost:3002',
+  optionsSuccessSatus:200,
   credentials: true
 }));
 
@@ -35,11 +36,6 @@ mongoose.connect(process.env.MONGODB_URI, {
   console.error('Error de conexión a MongoDB', err);
 });
 
-// Accede a las colecciones users y productos dentro de ecommerce
-// const db = mongoose.connection;
-// db.collection('users');
-// // db.collection('productos');
-
 
 //rutas--------------------------------------------------------------------------
 
@@ -48,6 +44,10 @@ app.use("/api/productos", productosRouter);
 
 
 // Start server----------------------------------------------------
-app.listen(process.env.PORT, () => {
-  console.log(`Server corriendo en el puerto ${process.env.PORT}`);
-});
+
+
+const PORT = process.env.PORT || 8080
+
+app.listen(PORT,()=>{
+    console.log("Server corriendo en el puerto",PORT )
+})
