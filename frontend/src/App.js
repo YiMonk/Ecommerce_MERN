@@ -1,35 +1,24 @@
-// import './App.css';
-import React from 'react';
+import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Catalogo from './Componentes/Catalogo/Catalogo';
-import Navbar from './Componentes/navbar/nav';
-import Footer from './Componentes/Footer/Footer';
-import DetallesProducto from './Componentes/Producto/DetallesProducto';
-import Login from './Componentes/login/Login';
-import Registrar from './Componentes/login/Registrar';
+import { DataProvider } from './GlobalState';
+import Header from './Components/Headers/Header';
+import MainPages from './Components/Mainpages/Pages'
 
 function App() {
   return (
 
-    <div className="App">
+    <DataProvider>
       <Router>
-        <Navbar />
+        <div className='App'>
+          <Header />
 
-        <div >
           <Routes>
-
-            <Route path="/Catalogo" element={<Catalogo />} />
-            <Route path="/producto/:id" element={<DetallesProducto />} />
-            <Route path="/Login/" element={<Login/>} />
-            <Route path="/registrar" element={<Registrar/>} />
-
+            <Route path='*' element={MainPages} />
           </Routes>
+
         </div>
-
-        <Footer />
       </Router>
-    </div>
-
+    </DataProvider>
   );
 }
 

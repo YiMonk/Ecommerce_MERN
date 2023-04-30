@@ -37,10 +37,10 @@ router.get("/detalles/:id",
 router.post("/add",authAdmin,
   check("nombre", "Introduce nombre del producto").not().isEmpty(),
   check("precio", "Introduce precio del producto").not().isEmpty(),
-  check("img", "Add img").not().isEmpty(),
+  check("imagen", "Add imagen").not().isEmpty(),
   check("descripcion", "Introduce descripcion del producto").not().isEmpty(),
   (req, res) => {
-    const { nombre, precio, img, descripcion } = req.body;
+    const { nombre, precio, imagen, descripcion } = req.body;
 
     const error = validationResult(req);
 
@@ -52,7 +52,7 @@ router.post("/add",authAdmin,
     const newProduct = new productoModel({
       nombre,
       precio,
-      img,
+      imagen,
       descripcion,
     });
 

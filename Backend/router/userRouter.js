@@ -161,19 +161,14 @@ router.get("/logout",
     });
 
 // mostrar uno -------------------------------------------------------------------------------------
-router.get("/userDetalles/:id", auth,
+router.get("/Detalles", auth,
   async (req, res) => {
     try {
-      const { id } = req.params;
-
-      const user = await userModel.findById(id);
-
-      if (!user) {
-        res.json({ message: "Usuario no existe", status: 0 });
-        return;
-      }
-
+      const Users = await userModel;
+      const user = await Users.findById(req.user.id).select("-clave");
+      if (!user) return res.status(400).json({ msg: " el usuario no existe" });
       res.json(user);
+
     } catch (error) {
       return res.status(500).json({ msg: error.message });
     }
