@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser")
-
 const userRouter = require("./router/userRouter");
 const productosRouter = require("./router/productosRouter");
 
@@ -23,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-// Conectar a MongoDB----------------------------------------------
+// Conexion a MongoDB
 
 mongoose.set('strictQuery', false);
 mongoose.connect(process.env.MONGODB_URI, {
@@ -37,13 +36,13 @@ mongoose.connect(process.env.MONGODB_URI, {
 });
 
 
-//rutas--------------------------------------------------------------------------
+// Rutas
 
 app.use("/api/user", userRouter);
 app.use("/api/productos", productosRouter);
 
 
-// Start server----------------------------------------------------
+// Iniciar Servidor
 
 
 const PORT = process.env.PORT || 8080

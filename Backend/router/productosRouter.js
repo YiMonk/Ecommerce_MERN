@@ -5,7 +5,7 @@ const { check, validationResult } = require("express-validator");
 const authAdmin = require("../middleware/authAdmin");
 
 
-// Ver todos los productos ----------------------------------------------------------------------------
+// Ver todos los productos 
 
 router.get("/all",
   async (req, res) => {
@@ -17,7 +17,7 @@ router.get("/all",
     }
   });
 
-// Ver un producto --------------------------------------------------------------------------------------
+// Ver un producto 
 
 router.get("/detalles/:id",
   async (req, res) => {
@@ -33,7 +33,8 @@ router.get("/detalles/:id",
     res.json(productos);
   });
 
-// Agregar producto ----------------------------------------------------------------------------
+// Agregar producto 
+
 router.post("/add",authAdmin,
   check("nombre", "Introduce nombre del producto").not().isEmpty(),
   check("precio", "Introduce precio del producto").not().isEmpty(),
@@ -62,7 +63,8 @@ router.post("/add",authAdmin,
   }
 );
 
-// Actualizar producto ----------------------------------------------------------------------------
+// Actualizar producto 
+
 router.put("/updateProduct/:id", authAdmin,
  async (req, res) => {
   const { id } = req.params;
@@ -88,7 +90,8 @@ router.put("/updateProduct/:id", authAdmin,
   }
 });
 
-// Eliminar producto --------------------------------------------------------------------------------
+// Eliminar producto
+
 router.delete("/deleteProduct/:id", authAdmin,
  async (req, res) => {
   const { id } = req.params;

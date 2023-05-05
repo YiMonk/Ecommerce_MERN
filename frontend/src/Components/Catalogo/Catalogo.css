@@ -1,0 +1,19 @@
+.card-body {
+  font-family: 'Orbitron', sans-serif;
+  display: flex;
+  flex-direction:row;
+  justify-content: space-between;
+
+}
+
+.card-title {
+  font-size: 1.8rem;
+  padding: 15px;
+  
+}
+
+.card-text {
+  font-size: 1.5rem;
+  padding: 15px;
+  
+}

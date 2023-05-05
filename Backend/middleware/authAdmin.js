@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 
 const authAdmin = async (req, res, next) => {
+  
   try {
     const token = req.header("Authorization");
     if (!token) return res.status(500).json({ msg: "Autenticacion invalida" });

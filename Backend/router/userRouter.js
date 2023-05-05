@@ -8,7 +8,7 @@ const authAdmin = require("../middleware/authAdmin");
 const jwt = require("jsonwebtoken");
 
 
-// register -------------------------------------------------------------------------------------
+// Registro
 router.post("/register",
   [
     check("nombre", "Introduce nombre").not().isEmpty(),
@@ -96,7 +96,7 @@ router.post("/register",
     }
   });
 
-// login -------------------------------------------------------------------------------------
+// Login 
 router.post("/login",
   [
     check("email", "Introduce email").not().isEmpty(),
@@ -138,7 +138,7 @@ router.post("/login",
   }
 );
 
-// logout -------------------------------------------------------------------------------------
+// logout 
 router.get("/logout",
   async (req, res) => {
     try {
@@ -149,7 +149,7 @@ router.get("/logout",
     }
   });
 
-  // mostrar todos -------------------------------------------------------------------------------------
+  // Mostrar Todos 
   router.get("/allUsers", authAdmin,
     async (req, res) => {
       try {
@@ -160,7 +160,7 @@ router.get("/logout",
       }
     });
 
-// mostrar uno -------------------------------------------------------------------------------------
+// Mostrar Uno 
 router.get("/Detalles", auth,
   async (req, res) => {
     try {
@@ -175,7 +175,7 @@ router.get("/Detalles", auth,
 
   });
 
-// actualizar -------------------------------------------------------------------------------------
+// Actualizar 
 router.put("/updateUser/:id", auth,
   [
     check("nombre", "Introduce nombre").not().isEmpty(),
@@ -232,7 +232,7 @@ router.put("/updateUser/:id", auth,
   }
 );
 
-// refresh token ---------------------------------------------------------------------------------
+// Refresh Token 
 router.get("/refreshToken",
   async (req, res) => {
     try {
@@ -253,11 +253,15 @@ router.get("/refreshToken",
   });
 
 
+
+// Crear Token
 const createAccessToken = (user) => {
   return jwt.sign(user, process.env.AccessTokenSecret, { expiresIn: "11m" })
 }
+
+//Refrescar token
 const createRefreshToken = (user) => {
-  return jwt.sign(user, process.env.RefreshTokenSecret, { expiresIn: "12m" })
+  return jwt.sign(user, process.env.RefreshTokenSecret, { expiresIn: "1m" })
 }
 
 
