@@ -8,7 +8,7 @@ function Catalogo() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3002/api/productos/all")
+      .get("/api/productos/all")
       .then((res) => {
         setProductos(res.data);
       })

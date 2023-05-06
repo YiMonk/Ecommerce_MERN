@@ -12,7 +12,7 @@ function DetallesProducto() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3002/api/productos/detalles/${id}`)
+      .get(`/api/productos/detalles/${id}`)
       .then((res) => {
         setProducto(res.data);
       })

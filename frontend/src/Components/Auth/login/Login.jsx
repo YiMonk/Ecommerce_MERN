@@ -21,7 +21,7 @@ function Login() {
   const loginSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3002/api/user/login", { ...inputs })
+      await axios.post("/api/user/login", { ...inputs })
       localStorage.setItem("firstLogin", true);
       window.location.href = "/";
 
