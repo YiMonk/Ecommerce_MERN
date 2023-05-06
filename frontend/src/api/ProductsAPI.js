@@ -8,7 +8,7 @@ function ProductsAPI() {
 
     useEffect(() => {
         const getProductos = async () => {
-            const res = await axios.get('http://localhost:3002/api/productos/all');
+            const res = await axios.get('/api/productos/all');
             setProductos(res.data.productos);
         };
         getProductos();

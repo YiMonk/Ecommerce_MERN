@@ -1,9 +1,8 @@
 import "../login/Login";
-import { Button, Form } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import React, { useState } from "react";
-
 
 function Registrar() {
   const [inputs, setInputs] = useState({
@@ -17,26 +16,55 @@ function Registrar() {
     clave: "",
   });
 
+  const [errors, setErrors] = useState({});
 
-  const onChangeInput = e => {
+  const onChangeInput = (e) => {
     const { name, value } = e.target;
     setInputs({ ...inputs, [name]: value });
   };
 
-  const registerSubmit = async e => {
-    e.preventDefault()
-    try {
-        await axios.post("http://localhost:3002/api/user/register", { ...inputs })
-        localStorage.setItem('firstLogin', true)
-        window.location.href = "/"
-    } catch (error) {
-        alert(error.res.data.msg)
-    }
-}
+  const registerSubmit = async (e) => {
+         e.preventDefault();
 
+    const errors = {};
+  
+    if (!inputs.nombre) {
+      errors.name = "Please enter your name";
+    }
+    if (!inputs.apellido) {
+      errors.name = "Please enter your lastname";
+    }
+    if (!inputs.email) {
+      errors.email = "Please enter your email";
+    }
+    if (inputs.clave.length < 6) {
+      errors.password = "Password must be at least 6 characters";
+    }
+
+    setErrors(errors);
+
+    if (Object.keys(errors).length === 0) {
+      try {
+        await axios.post("/api/user/register", { ...inputs });
+        localStorage.setItem("firstLogin", true);
+        window.location.href = "/";
+      } catch (error) {
+        console.log(error);
+        alert(error.res.data.msg);
+      }
+    }
+  };
 
   return (
     <div className="container-log">
+      {Object.keys(errors).length > 0 && (
+        <Alert variant="danger">
+          {Object.values(errors).map((error) => (
+            <p>{error}</p>
+          ))}
+        </Alert>
+      )}
+
       <Form onSubmit={registerSubmit} className="p-4 my-4 py-4">
         <p className="titulo">Crear cuenta</p>
 
@@ -46,6 +74,7 @@ function Registrar() {
             type="text"
             placeholder="..."
             name="nombre"
+            value={inputs.nombre}
             onChange={onChangeInput}
           />
         </Form.Group>
@@ -88,7 +117,6 @@ function Registrar() {
               </option>
             ))}
           </Form.Select>
-
         </Form.Group>
 
         <Form.Group className="mb-3">
@@ -142,7 +170,6 @@ function Registrar() {
         <Form.Text className="text-muted">
           <Link to={`/login`}>¿Ya tienes una cuenta? Inicia Sesion</Link>
         </Form.Text>
-
       </Form>
     </div>
   );

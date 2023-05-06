@@ -12,7 +12,7 @@ export function UserAPI(token) {
       const getUser = async () => {
         try {
           const res = await axios.get(
-            "http://localhost:3002/api/user/Detalles",
+            "/api/user/Detalles",
             { header: { Authorization: token } }
           );
 
