@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import React, { useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
@@ -11,6 +11,8 @@ function Login() {
     email: "",
     clave: "",
   });
+
+  const [error, setError] = useState("");
 
 
   const onChangeInput = (e) => {
@@ -20,12 +22,17 @@ function Login() {
 
   const loginSubmit = async (e) => {
     e.preventDefault();
+    if (!inputs.email || !inputs.clave) {
+      setError("Por favor complete todos los campos");
+      return;
+    }
     try {
       await axios.post("/api/user/login", { ...inputs })
       localStorage.setItem("firstLogin", true);
       window.location.href = "/";
 
     } catch (error) {
+      setError("Credenciales incorrectas. Por favor, inténtelo de nuevo.");
       alert(error.inputs.data.msg);
     }
   };
@@ -68,6 +75,8 @@ function Login() {
           <Button type="submit" variant="dark" size="lg">
             Iniciar Sesion
           </Button>
+          {error && <div className="alert alert-danger">{error}</div>}
+
         </div>
 
         <Form.Text className="text-muted">

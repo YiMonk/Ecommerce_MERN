@@ -29,16 +29,16 @@ function Registrar() {
     const errors = {};
   
     if (!inputs.nombre) {
-      errors.name = "Please enter your name";
+      errors.nombre = "Please enter your name";
     }
     if (!inputs.apellido) {
-      errors.name = "Please enter your lastname";
+      errors.apellido = "Please enter your lastname";
     }
     if (!inputs.email) {
       errors.email = "Please enter your email";
     }
     if (inputs.clave.length < 6) {
-      errors.password = "Password must be at least 6 characters";
+      errors.clave = "Password must be at least 6 characters";
     }
 
     setErrors(errors);
@@ -49,7 +49,6 @@ function Registrar() {
         localStorage.setItem("firstLogin", true);
         window.location.href = "/";
       } catch (error) {
-        console.log(error);
         alert(error.res.data.msg);
       }
     }

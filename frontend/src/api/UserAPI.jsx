@@ -1,19 +1,18 @@
-import { useState, createContext } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
-export const UserContext = createContext();
 
 export function UserAPI(token) {
   const [isLogged, setIsLogged] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  useState(() => {
+  useEffect(() => {
     if (token) {
       const getUser = async () => {
         try {
           const res = await axios.get(
             "/api/user/Detalles",
-            { header: { Authorization: token } }
+            { header: { Authorization: token }, }
           );
 
           setIsLogged(true);
