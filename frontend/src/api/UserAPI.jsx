@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-
-export function UserAPI(token) {
+function UserAPI(token) {
   const [isLogged, setIsLogged] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -10,15 +9,13 @@ export function UserAPI(token) {
     if (token) {
       const getUser = async () => {
         try {
-          const res = await axios.get(
-            "/api/user/Detalles",
-            { header: { Authorization: token }, }
-          );
+          const res = await axios.get("/api/user/Detalles", {
+            header: { Authorization: token },
+          });
 
           setIsLogged(true);
 
           res.data.role === 1 ? setIsAdmin(true) : setIsAdmin(false);
-
         } catch (error) {
           alert(error.res.data.msg);
         }
@@ -28,8 +25,21 @@ export function UserAPI(token) {
     }
   }, [token]);
 
+  const viewDetail = async (product)=>{
+    if(!isLogged) return alert("Por favor logeate para continuar")
+    if(isLogged){
+      await axios.get(`/detail/:${product._id}`,
+      {
+        headers: {Authorization: token}
+      })
+    }
+  }
+
   return {
     isLogged: [isLogged, setIsLogged],
     isAdmin: [isAdmin, setIsAdmin],
+    viewDetail: viewDetail
   };
 }
+
+export default UserAPI;
