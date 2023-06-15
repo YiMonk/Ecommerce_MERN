@@ -1,7 +1,19 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-function UserAPI(token) {
+const getUserDetails = async (token) => {
+  try {
+    const res = await axios.get("/api/user/Detalles", {
+      header: { Authorization: token },
+    });
+
+    return res.data;
+  } catch (error) {
+    throw new Error(error.res.data.msg);
+  }
+};
+
+const UserAPI = (token) => {
   const [isLogged, setIsLogged] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -9,13 +21,11 @@ function UserAPI(token) {
     if (token) {
       const getUser = async () => {
         try {
-          const res = await axios.get("/api/user/Detalles", {
-            header: { Authorization: token },
-          });
+          const userDetails = await getUserDetails(token);
 
           setIsLogged(true);
 
-          res.data.role === 1 ? setIsAdmin(true) : setIsAdmin(false);
+          userDetails.role === 1 ? setIsAdmin(true) : setIsAdmin(false);
         } catch (error) {
           alert(error.res.data.msg);
         }
@@ -25,21 +35,10 @@ function UserAPI(token) {
     }
   }, [token]);
 
-  const viewDetail = async (product)=>{
-    if(!isLogged) return alert("Por favor logeate para continuar")
-    if(isLogged){
-      await axios.get(`/detail/:${product._id}`,
-      {
-        headers: {Authorization: token}
-      })
-    }
-  }
-
   return {
     isLogged: [isLogged, setIsLogged],
     isAdmin: [isAdmin, setIsAdmin],
-    viewDetail: viewDetail
   };
-}
+};
 
 export default UserAPI;

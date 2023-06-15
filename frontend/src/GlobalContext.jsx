@@ -9,7 +9,7 @@ export const DataProvider = ({ children }) => {
   const [token, setToken] = useState(false);
 
   useEffect(() => {
-    const firstLogin = localStorage.getItem("firstLogin"); 
+    const firstLogin = localStorage.getItem("firstLogin");
     if (firstLogin) {
       const refreshToken = async () => {
         const res = await axios.get("/api/user/refreshToken");
@@ -22,15 +22,14 @@ export const DataProvider = ({ children }) => {
     }
   }, []);
 
-    const state={
-        token: [token, setToken],
-        ProductsAPI: ProductsAPI(),
-        UserAPI : UserAPI(token),
-    }
+  ProductsAPI();
+  const state = {
+    token: [token, setToken],
+    ProductsAPI: ProductsAPI(),
+    UserAPI: UserAPI(token),
+  };
 
-    return(
-        <GlobalContext.Provider value={state}>
-            {children}
-        </GlobalContext.Provider>
-    )
+  return (
+    <GlobalContext.Provider value={state}>{children}</GlobalContext.Provider>
+  );
 };

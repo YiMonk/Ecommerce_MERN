@@ -1,19 +1,14 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../Utils/imagen/logo.png";
 import "./nav.css";
 import CarritoIcon from "../../Utils/Icons/carrito.svg";
 import UserIcon from "../../Utils/Icons/user.svg";
 import axios from "axios";
-import { GlobalContext } from "../../GlobalContext";
 
 function Header() {
-  const state = useContext(GlobalContext);
 
-  const [isLogged] = state.UserAPI.isLogged;
-  const [isAdmin] = state.UserAPI.isAdmin;
   const [isOpen, setIsOpen] = useState(false);
-
 
   const logoutUser = async () => {
     await axios.get("/api/user/logout");
@@ -21,25 +16,28 @@ function Header() {
     window.location.href = "/";
   };
 
-  const adminRouter = () => {
-    return (
-      <>
-        <li>
-          <Link to={"CrearProducto"}>Create Product</Link>
-        </li>
-      </>
-    );
-  };
+  // const adminRouter = () => {
+  //   return (
+  //     <>
+  //       <li>
+  //         <Link to={"CrearProducto"}>Create Product</Link>
+  //       </li>
+  //     </>
+  //   );
+  // };
 
   const loggedRouter = () => {
     return (
       <>
-        <li className=" icono nav-item">
+        <li className="navbar icono nav-item">
+          <Link to="/Login" className="nav-link">
+            <img src={UserIcon} alt="" width="25" />
+          </Link>
+
           <Link to="/carrito" className="nav-link">
             <img src={CarritoIcon} alt="" width="25" />
           </Link>
-        </li>
-        <li>
+
           <Link to={"/"} onClick={logoutUser}>
             Logout
           </Link>
@@ -52,9 +50,6 @@ function Header() {
     setIsOpen(!isOpen);
   };
 
-  // const styleMenu = {
-  //   left: isOpen ? 0 : "-100%",
-  // };
 
   return (
     <nav className="navbar navbar-expand-sm navbar-light bg-light">
@@ -63,7 +58,7 @@ function Header() {
           <ul className="navbar-nav">
             <li className="nav-item">
               <Link to="/" className="nav-link">
-                {isAdmin ? "Admin" : "Catalogo"}
+                Catalogo
               </Link>
             </li>
           </ul>
@@ -77,24 +72,7 @@ function Header() {
 
         <div className="perfil">
           <ul className="navbar-nav ml-auto">
-            <li>
-              {/* {adminRouter()} */}
-              {isAdmin && adminRouter()}
-              </li>
-
-            <li>
-              {/* {loggedRouter()} */}
-              {
-              isLogged ? (
-                loggedRouter()
-              ) : (
-                <li>
-                  <Link to={"/login"}>
-                    <img src={UserIcon} alt="" width="20" /> Login ☺ Register
-                  </Link>
-                </li>
-              ) }
-            </li>
+            <li>{loggedRouter()}</li>
           </ul>
         </div>
       </div>
